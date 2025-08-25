@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Földrajz Fogalomgyakorló</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <title>Kikérdező</title>
     <style>
         :root {
             --primary-bg: #f0f4f8;
@@ -21,8 +20,7 @@
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #e8f1f5; /* Alap háttérszín, ha a kép nem töltődne be */
-            /* A háttérkép dinamikusan lesz beállítva a JavaScript által */
+            background-color: #e8f1f5;
             color: var(--text-color);
             margin: 0;
             padding: 20px;
@@ -104,7 +102,7 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.9em;
-            transition: background-color: 0.2s;
+            transition: background-color 0.2s;
         }
         #restart-btn:hover { background-color: #6c7a7d; }
         #practice-area { text-align: center; animation: fadeIn 0.5s ease-in-out; }
@@ -134,4 +132,137 @@
         }
         #flashcard.flipped { transform: rotateY(180deg); }
         #flashcard.flashcard-success .card-face { box-shadow: 0 0 20px 5px var(--success-color); }
-        #flash
+        #flashcard.flashcard-fail .card-face { box-shadow: 0 0 20px 5px var(--fail-color); }
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            font-size: 1.3em;
+            text-align: center;
+            transition: box-shadow 0.3s;
+        }
+        #card-front { background-color: var(--card-bg); }
+        #card-back {
+            background-color: var(--card-back-bg);
+            transform: rotateY(180deg);
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        #controls { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        #fail-btn { background-color: var(--fail-color); }
+        #fail-btn:hover { background-color: #c0392b; }
+        #success-btn { background-color: var(--success-color); }
+        #success-btn:hover { background-color: #27ae60; }
+        #completion-message { text-align: center; padding: 40px; animation: fadeIn 0.5s ease-in-out; }
+        #completion-message h2 { font-size: 2em; }
+        #completion-message p { font-size: 1.2em; }
+        #reset-btn { background-color: var(--header-bg); }
+        #reset-btn:hover { background-color: #1e2b38; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Kikérdező 🧠</h1>
+        </header>
+        <main>
+            <div id="setup">
+                <div class="chapter-selection">
+                    <h2>Válassz fejezeteket!</h2>
+                    <div class="select-all-container chapter-item">
+                        <input type="checkbox" id="select-all-chapters">
+                        <label for="select-all-chapters"><strong>Összes kijelölése / elvetése</strong></label>
+                    </div>
+                    <div id="chapter-list" class="chapter-grid">
+                        <p>Fogalmak betöltése...</p>
+                    </div>
+                </div>
+                <div class="mode-selection">
+                    <h2>Válassz módot!</h2>
+                    <div class="mode-item">
+                        <input type="radio" id="termFirst" name="mode" value="termFirst" checked>
+                        <label for="termFirst">Először a fogalmat látom</label>
+                    </div>
+                    <div class="mode-item">
+                        <input type="radio" id="defFirst" name="mode" value="defFirst">
+                        <label for="defFirst">Először a meghatározást látom</label>
+                    </div>
+                </div>
+                <button id="start-btn" class="btn">Gyakorlás indítása</button>
+            </div>
+
+            <div id="practice-area" style="display:none;">
+                <div class="practice-header">
+                    <p id="progress-counter">1 / 10</p>
+                    <button id="restart-btn">Vissza a főmenübe</button>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="progress-bar"></div>
+                </div>
+                <div id="flashcard-container">
+                    <div id="flashcard">
+                        <div id="card-front" class="card-face"></div>
+                        <div id="card-back" class="card-face"></div>
+                    </div>
+                </div>
+                <div id="controls">
+                    <button id="fail-btn" class="btn">Nem tudtam (←)</button>
+                    <button id="success-btn" class="btn">Tudtam! (→)</button>
+                </div>
+            </div>
+
+            <div id="completion-message" style="display:none;">
+                <h2>Gratulálok! 🎉</h2>
+                <p>A kiválasztott fogalmak végére értél.</p>
+                <button id="reset-btn" class="btn">Új gyakorlás</button>
+            </div>
+        </main>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    // DOM elemek
+    const setupEl = document.getElementById('setup');
+    const practiceAreaEl = document.getElementById('practice-area');
+    const completionMessageEl = document.getElementById('completion-message');
+    const chapterListEl = document.getElementById('chapter-list');
+    const selectAllCheckbox = document.getElementById('select-all-chapters');
+    const startBtn = document.getElementById('start-btn');
+    const progressCounterEl = document.getElementById('progress-counter');
+    const progressBarEl = document.getElementById('progress-bar');
+    const flashcardEl = document.getElementById('flashcard');
+    const cardFrontEl = document.getElementById('card-front');
+    const cardBackEl = document.getElementById('card-back');
+    const failBtn = document.getElementById('fail-btn');
+    const successBtn = document.getElementById('success-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const restartBtn = document.getElementById('restart-btn');
+
+    // Állapotváltozók
+    let vocabulary = [];
+    let chapterTitles = new Map();
+    let activeCards = [];
+    let sessionTotalCards = 0;
+    let currentCardIndex = 0;
+    let practiceMode = 'termFirst';
+    let isProcessing = false;
+
+    function setRandomBackground() {
+        const patterns = [
+            "data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23bdd4e7' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b0cbe8' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M0 0h20v1H0zM0 4h20v1H0zM0 8h20v1H0zM0 12h20v1H0zM0 16h20v1H0z'/%3E%3Cpath d='M0 0h1v20H0zM4 0h1v20H4zM8 0h1v20H8zM12 0h1v20h-1zM16 0h1v20h-1z'/%3E%3C/g%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%23a3c2e1' fill-opacity='0.4' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.99-7.5L26 15v18.5L13 41 0 33.5V15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E",
+            "data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b2cfe8' fill-opacity='0.4'%3E%3Cpath d='M80 80V0H0v80h80zM20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1
