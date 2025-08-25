@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kikérdező</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         :root {
             --primary-bg: #f0f4f8;
@@ -83,7 +84,7 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.1s;
+            transition: background-color: 0.3s, transform 0.1s;
         }
         .btn:hover { transform: translateY(-2px); }
         #start-btn { background-color: var(--accent-color); }
@@ -265,4 +266,184 @@ document.addEventListener('DOMContentLoaded', async () => {
             "data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23bdd4e7' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E",
             "data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b0cbe8' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M0 0h20v1H0zM0 4h20v1H0zM0 8h20v1H0zM0 12h20v1H0zM0 16h20v1H0z'/%3E%3Cpath d='M0 0h1v20H0zM4 0h1v20H4zM8 0h1v20H8zM12 0h1v20h-1zM16 0h1v20h-1z'/%3E%3C/g%3E%3C/svg%3E",
             "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%23a3c2e1' fill-opacity='0.4' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.99-7.5L26 15v18.5L13 41 0 33.5V15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E",
-            "data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b2cfe8' fill-opacity='0.4'%3E%3Cpath d='M80 80V0H0v80h80zM20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1
+            "data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b2cfe8' fill-opacity='0.4'%3E%3Cpath d='M80 80V0H0v80h80zM20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z' opacity='.2'/%3E%3Cpath d='M0 0h80v80H0V0zm20 20h40v40H20V20z'/%3E%3Cpath d='M40 5a35 35 0 1 1 0 70 35 35 0 0 1 0-70zM40 70a30 30 0 1 0 0-60 30 30 0 0 0 0 60z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"
+        ];
+        const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
+        document.body.style.backgroundImage = `url("${randomPattern}")`;
+    }
+
+    async function loadDataFromXLSX() {
+        try {
+            const response = await fetch('fogalmak.xlsx');
+            if (!response.ok) throw new Error('A fogalmak.xlsx fájl nem található!');
+            
+            const arrayBuffer = await response.arrayBuffer();
+            const workbook = XLSX.read(arrayBuffer, {type: "buffer"});
+            const firstSheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[firstSheetName];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+            vocabulary = [];
+            chapterTitles.clear();
+
+            for (const row of jsonData) {
+                if (!row || row.length < 4) continue;
+
+                const term = String(row[0] || '').trim();
+                const definition = String(row[1] || '').trim();
+                const chapterNum = parseInt(row[2], 10);
+                const chapterName = String(row[3] || '').trim();
+
+                if (!isNaN(chapterNum) && term && definition && chapterName) {
+                    vocabulary.push({ term, definition, chapter: chapterNum });
+                    if (!chapterTitles.has(chapterNum)) {
+                        chapterTitles.set(chapterNum, chapterName);
+                    }
+                }
+            }
+            if (vocabulary.length === 0) {
+                 alert('Nem sikerült fogalmakat betölteni az Excel fájlból. Ellenőrizd a fájl formátumát!');
+            }
+        } catch (error) {
+            console.error('Hiba az XLSX betöltésekor:', error);
+            chapterListEl.innerHTML = `<p style="color:red;">Hiba: ${error.message}</p>`;
+        }
+    }
+
+    function getChapterTitle(num) {
+        return chapterTitles.get(num) || `Fejezet ${num}`;
+    }
+
+    function initializeSetup() {
+        const chapters = [...chapterTitles.keys()].sort((a, b) => a - b);
+        chapterListEl.innerHTML = '';
+        if (chapters.length === 0) {
+            chapterListEl.innerHTML = '<p>Nem található egyetlen fejezet sem.</p>';
+            return;
+        }
+        chapters.forEach(chapterNum => {
+            const chapterTitle = getChapterTitle(chapterNum);
+            const item = document.createElement('div');
+            item.className = 'chapter-item';
+            item.innerHTML = `<input type="checkbox" id="chapter-${chapterNum}" value="${chapterNum}" class="chapter-checkbox"><label for="chapter-${chapterNum}">${chapterNum}. ${chapterTitle}</label>`;
+            chapterListEl.appendChild(item);
+        });
+    }
+
+    function startGame() {
+        const selectedChapters = Array.from(document.querySelectorAll('.chapter-checkbox:checked')).map(cb => parseInt(cb.value));
+        practiceMode = document.querySelector('input[name="mode"]:checked').value;
+        if (selectedChapters.length === 0) {
+            alert('Kérlek, válassz legalább egy fejezetet!'); return;
+        }
+        activeCards = vocabulary.filter(card => selectedChapters.includes(card.chapter));
+        activeCards = shuffleArray(activeCards);
+        if (activeCards.length === 0) {
+            alert('A kiválasztott fejezetekhez nem tartozik fogalom.'); return;
+        }
+        sessionTotalCards = activeCards.length;
+        currentCardIndex = 0;
+        setupEl.style.display = 'none';
+        completionMessageEl.style.display = 'none';
+        practiceAreaEl.style.display = 'block';
+        displayCard();
+    }
+
+    function displayCard() {
+        if (activeCards.length === 0) { showCompletion(); return; }
+        if (currentCardIndex >= activeCards.length) { currentCardIndex = 0; }
+        isProcessing = false;
+        flashcardEl.classList.remove('flipped', 'flashcard-success', 'flashcard-fail');
+        setTimeout(() => {
+            const card = activeCards[currentCardIndex];
+            cardFrontEl.textContent = practiceMode === 'termFirst' ? card.term : card.definition;
+            cardBackEl.textContent = practiceMode === 'termFirst' ? card.definition : card.term;
+            updateProgress();
+        }, 300);
+    }
+
+    function updateProgress() {
+        const done = sessionTotalCards - activeCards.length;
+        progressCounterEl.textContent = activeCards.length > 0 ? `${done + 1} / ${sessionTotalCards} fogalom` : `${done} / ${sessionTotalCards} fogalom`;
+        progressBarEl.style.width = `${(done / sessionTotalCards) * 100}%`;
+    }
+
+    function handleSuccess() {
+        if (isProcessing || activeCards.length === 0) return;
+        isProcessing = true;
+        flashcardEl.classList.add('flashcard-success');
+        setTimeout(() => {
+            activeCards.splice(currentCardIndex, 1);
+            if (activeCards.length === 0) { updateProgress(); }
+            displayCard();
+        }, 400);
+    }
+
+    function handleFailure() {
+        if (isProcessing || activeCards.length <= 1) {
+            if (activeCards.length === 1 && !isProcessing) {
+                flashcardEl.classList.add('flashcard-fail');
+                setTimeout(() => flashcardEl.classList.remove('flashcard-fail'), 400);
+            }
+            return;
+        }
+        isProcessing = true;
+        flashcardEl.classList.add('flashcard-fail');
+        setTimeout(() => {
+            currentCardIndex = (currentCardIndex + 1) % activeCards.length;
+            displayCard();
+        }, 400);
+    }
+
+    function showCompletion() {
+        progressBarEl.style.width = `100%`;
+        practiceAreaEl.style.display = 'none';
+        completionMessageEl.style.display = 'block';
+    }
+
+    function resetGame() {
+        completionMessageEl.style.display = 'none';
+        practiceAreaEl.style.display = 'none';
+        setupEl.style.display = 'block';
+        progressBarEl.style.width = '0%';
+        setRandomBackground();
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Eseményfigyelők
+    startBtn.addEventListener('click', startGame);
+    flashcardEl.addEventListener('click', () => flashcardEl.classList.toggle('flipped'));
+    successBtn.addEventListener('click', handleSuccess);
+    failBtn.addEventListener('click', handleFailure);
+    resetBtn.addEventListener('click', resetGame);
+    restartBtn.addEventListener('click', resetGame);
+    selectAllCheckbox.addEventListener('change', (e) => {
+        document.querySelectorAll('.chapter-checkbox').forEach(cb => { cb.checked = e.target.checked; });
+    });
+    document.addEventListener('keydown', (e) => {
+        if (practiceAreaEl.style.display !== 'block' || isProcessing) return;
+        if (e.code === 'Space') { e.preventDefault(); flashcardEl.classList.toggle('flipped'); }
+        if (e.code === 'ArrowRight') { handleSuccess(); }
+        if (e.code === 'ArrowLeft') { handleFailure(); }
+    });
+
+    // Program indítása
+    async function main() {
+        setRandomBackground();
+        await loadDataFromXLSX();
+        initializeSetup();
+    }
+    
+    main();
+});
+</script>
+
+</body>
+</html>
