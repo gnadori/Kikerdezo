@@ -1,0 +1,66 @@
+Légkör (atmoszféra);A Földet körülvevő vékony gázréteg, amely lehetővé teszi az életet.;1;Légkör
+Légkör rétegei;A légkör hőmérséklet-változás alapján elkülönülő, egymás felett elhelyezkedő zónái (troposzféra, sztratoszféra, stb.).;1;Légkör
+Troposzféra;A légkör legalsó rétege (kb. 11 km-ig), ahol az időjárási jelenségek zajlanak, és a hőmérséklet a magassággal csökken.;1;Légkör
+Tropopauza;A troposzféra felső határa, ahol a hőmérséklet csökkenése megáll és ellentétes irányba változik.;1;Légkör
+Sztratoszféra;A troposzféra feletti réteg (11-50 km), ahol a hőmérséklet az ózonréteg miatt a magassággal emelkedik.;1;Légkör
+Ózonréteg;A sztratoszférában található réteg, amely elnyeli a káros ultraibolya (UV) sugárzást.;1;Légkör
+Mezoszféra;A sztratoszféra feletti réteg, ahol a hőmérséklet ismét csökken, és a meteorok többsége elég. A légkör leghidegebb része.;1;Légkör
+Termoszféra;Kb. 90 km-től kezdődő réteg, ahol a hőmérséklet a napsugárzás hatására ismét gyorsan nő. Itt kering a Nemzetközi Űrállomás.;1;Légkör
+Ionoszféra;A termoszféra ionizált része, amely visszaveri a rádióhullámokat, lehetővé téve a távolsági rádiózást.;1;Légkör
+Exoszféra;A légkör legkülső, bolygóközi térbe átmenő rétege.;1;Légkör
+Állandó gázok;Olyan légköri gázok, amelyek mennyisége hosszú távon nem változik (pl. nitrogén, oxigén, argon).;1;Légkör
+Változó gázok;Légköri gázok, amelyek mennyisége viszonylag rövid idő (hónapok, évek) alatt változik (pl. szén-dioxid, metán).;1;Légkör
+Erősen változó gázok;Olyan gázok, amelyek mennyisége akár napok alatt is jelentősen változhat (pl. vízgőz).;1;Légkör
+Szén-dioxid (CO2);Fontos üvegházhatású gáz, a fosszilis tüzelőanyagok égetése növeli a légköri koncentrációját.;2;Gázok
+Szén-monoxid (CO);Tökéletlen égés során keletkező mérgező gáz, amely gátolja a vér oxigénszállítását.;2;Gázok
+Metán (CH4);Jelentős üvegházhatású gáz, amely anaerob bomlási folyamatok során keletkezik (pl. mocsarak, rizsföldek).;2;Gázok
+Nitrogén-oxidok;Magas hőmérsékletű égés során keletkező mérgező gázok, amelyek szerepet játszanak a szmog, a savas eső és az ózonpajzs bontásában.;2;Gázok
+Kén-dioxid (SO2);Kéntartalmú tüzelőanyagok égetésekor keletkező mérgező gáz, a savas eső és a szmog egyik fő okozója.;2;Gázok
+Ózon (O3);A sztratoszférában védőpajzsot alkot, de a troposzférában veszélyes légszennyező anyag.;2;Gázok
+Freonok (CFC);Mesterségesen előállított gázok, amelyeket korábban hűtőközegként és spray-kben használtak, de erősen károsítják az ózonréteget.;2;Gázok
+Üvegházhatás;A légkör hővisszatartó képessége, amelynek során bizonyos gázok (pl. CO2, vízgőz) visszasugározzák a Föld által kibocsátott hőt. Enélkül a Föld átlaghőmérséklete -15 °C körül lenne.;3;Felmelegedés
+Albedó;Egy felület sugárzás-visszaverő képessége. A világos felületek (pl. hó) albedója magas, a sötéteké (pl. óceán) alacsony.;3;Felmelegedés
+Napi középhőmérséklet;Az egy nap során mért hőmérsékleti adatok számtani átlaga.;3;Felmelegedés
+Hőmérséklet napi ingása;A 24 óra alatt mért legmagasabb és legalacsonyabb hőmérséklet különbsége.;3;Felmelegedés
+Évi középhőmérséklet;A tizenkét hónap középhőmérsékleteinek számtani átlaga.;3;Felmelegedés
+Hőmérséklet évi közepes ingása;A legmelegebb és a leghidegebb hónap középhőmérsékletének különbsége.;3;Felmelegedés
+Izotermatérkép;Olyan térkép, amely az azonos középhőmérsékletű pontokat összekötő görbékkel (izoterma) ábrázolja a hőmérséklet eloszlását.;3;Felmelegedés
+Légnyomás;Az adott pont feletti légoszlop súlyából származó nyomás.;4;Csapadék
+Izobárvonalak;Az azonos légnyomású pontokat összekötő görbék a térképen.;4;Csapadék
+Abszolút páratartalom;A levegőben található vízgőz tömege, általában g/m³-ben kifejezve.;4;Csapadék
+Relatív páratartalom;Megmutatja, hogy a levegő vízgőztartalma hány százaléka az adott hőmérsékleten lehetséges maximálisnak.;4;Csapadék
+Harmatpont;Az a hőmérséklet, amelyre a levegőnek le kell hűlnie, hogy a benne lévő vízgőz kicsapódjon (telítetté váljon).;4;Csapadék
+Kondenzációs magvak;Apró, szilárd szemcsék (pl. porszemek) a légkörben, amelyeken a vízgőz kicsapódása megindul, így jönnek létre a felhő- és esőcseppek.;4;Csapadék
+Főn szél;Hegységek szélárnyékos oldalán kialakuló száraz, meleg, lebukó szél.;4;Csapadék
+Harmat;A hideg felszínen, 0 °C felett kicsapódó vízgőz.;4;Csapadék
+Dér;A hideg felszínen, 0 °C alatt kicsapódó vízgőz; jégkristályok formájában jelenik meg.;4;Csapadék
+Zúzmara;Túlhűlt ködcseppek ráfagyása a tereptárgyakra, ami vastag jégréteget képezhet.;4;Csapadék
+Szél;A levegő vízszintes irányú áramlása, amelyet a légnyomáskülönbségek hoznak létre (mindig a magas nyomású hely felől az alacsony felé fúj).;5;Szél
+Parti szél;A szárazföld és a víz eltérő felmelegedése és lehűlése miatt kialakuló, napi periódusú helyi szél.;5;Szél
+Coriolis-hatás;A Föld forgásából adódó eltérítő erő, amely az északi féltekén jobbra, a délin balra téríti ki a mozgó légtömegeket.;5;Szél
+Időjárási front;Két eltérő hőmérsékletű és sűrűségű légtömeg találkozási határvonala.;6;Frontok
+Hidegfront;Amikor hideg levegő nyomul a melegebb alá, azt felemelkedésre kényszerítve. Gyors, heves időjárás-változást (zápor, zivatar) okoz.;6;Frontok
+Melegfront;Amikor a meleg levegő felsiklik a hidegebb, sűrűbb levegőre. Lassú, csendes, több napos esőzést eredményez.;6;Frontok
+Ciklon;Alacsony légnyomású légköri képződmény, amelyben a levegő az északi féltekén az óramutató járásával ellentétesen áramlik befelé és felfelé. Jellemzően felhős, csapadékos időjárást okoz.;6;Frontok
+Trópusi ciklon;A trópusi óceánok felett kialakuló, rendkívül heves, nagy pusztításra képes légörvény. Elnevezései: hurrikán (Amerika), tájfun (Délkelet-Ázsia), orkán (Indiai-óceán).;6;Frontok
+Anticiklon;Magas légnyomású légköri képződmény, amelyben a levegő az északi féltekén az óramutató járásával megegyezően áramlik kifelé és lefelé. Jellemzően derült, száraz, szélcsendes időjárást okoz.;6;Frontok
+Passzát szelek;A térítők felől az Egyenlítő felé fújó, állandó irányú és sebességű szelek.;7;Légkörzés
+Nyugatias szelek;A mérsékelt övben (a 30° és 60° szélességi körök között) uralkodó szelek.;7;Légkörzés
+Sarki szelek;A sarkoktól a sarkkörök felé fújó hideg szelek.;7;Légkörzés
+Nagy földi légkörzés;A passzát, a nyugatias és a sarki szeleket magába foglaló, az egész Földre kiterjedő, háromcellás légáramlási rendszer.;7;Légkörzés
+Monszunszél;Évszakosan irányt váltó szélrendszer, amelyet a kontinensek és az óceánok eltérő felmelegedése okoz. Nyáron az óceán felől bőséges csapadékot, télen a szárazföld felől szárazságot hoz.;7;Légkörzés
+Hőmérsékleti egyenlítő;A Föld legmelegebb pontjait összekötő vonal, amely a kontinensek felett jobban eltávolodik a földrajzi Egyenlítőtől.;7;Légkörzés
+Időjárás;A légkör pillanatnyi fizikai állapota egy adott helyen.;8;Éghajlat
+Éghajlat (klíma);Egy adott hely időjárásának hosszú távú, szabályszerű ismétlődéseiből álló rendszer.;8;Éghajlat
+Szoláris éghajlati övezetek;Kizárólag a napsugarak hajlásszöge alapján meghatározott éghajlati övezetek (forró, mérsékelt, hideg), határai a nevezetes szélességi körök.;8;Éghajlat
+Földrajzi övezetesség;Az éghajlat által meghatározott természetes növénytakaró, állatvilág és talaj övezetes elrendeződése a Földön.;8;Éghajlat
+Klímadiagram;Egy adott hely éghajlatát bemutató grafikon, amely a havi átlaghőmérsékletet és a havi csapadékmennyiséget ábrázolja.;8;Éghajlat
+Forró övezet;A Ráktérítő és a Baktérítő között elhelyezkedő éghajlati övezet, ahol az évi középhőmérséklet mindenhol 20°C felett van.;9;Forró övezet
+Szavanna éghajlat;A forró övezet átmeneti öve, ahol egy esős és egy száraz évszak váltakozik. Természetes növénytakarója a magas füvű, ligetes szavanna.;9;Forró övezet
+Mérsékelt övezet;A forró és a hideg övezet között elhelyezkedő éghajlati övezet, ahol négy évszak alakult ki.;10;Mérsékelt övezet
+Mediterrán éghajlat;A meleg-mérsékelt övben található, forró, száraz nyár és enyhe, csapadékos tél jellemzi. Természetes növénytakarója a keménylombú erdő.;10;Mérsékelt övezet
+Tajga;A hideg-mérsékelt öv természetes növénytakarója, egy hatalmas kiterjedésű, főként tűlevelűekből álló fenyőerdő.;10;Mérsékelt övezet
+Hideg övezet;A sarkkörökön túli területek éghajlati övezete, ahol az évi középhőmérséklet 0°C alatt van, és a nyár hűvös és rövid.;11;Hideg övezet
+Tundra éghajlat;A sarkköri öv éghajlata, hosszú, hideg tél és rövid, hűvös nyár jellemzi. A talaj mélyebb rétegei tartósan fagyottak.;11;Hideg övezet
+Függőleges övezetesség;A hegyvidékeken a tengerszint feletti magassággal változó éghajlati viszonyok miatt kialakuló, emeletesen elhelyezkedő növényzeti övek rendszere.;12;Hegyvidék
+Hóhatár;Az a magassági vonal a hegyvidékeken, amely felett a hó egész évben megmarad.;12;Hegyvidék
